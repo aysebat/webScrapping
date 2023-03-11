@@ -1,5 +1,11 @@
 from selenium import webdriver
 
+######################################
+#add this line for your local computer
+#from selenium.webdriver.chrome.service import Service
+#service = Service('\pathof_the _choromeDriver') #you should downlond from web and make the place the absolute path in Service
+######################################
+
 def get_driver():
 
   #set options to make browsing easier
@@ -14,6 +20,12 @@ def get_driver():
   #instantiate driver
   #dont need to execute the path because we are uisng repl
   driver = webdriver.Chrome(options=options)
+  ######################################
+  #add this line for your local computer
+  #use this driver options in your local computer
+   #driver = webdriver.Chrome(service=service, options=options)
+  ######################################
+  
   driver.get("http://automated.pythonanywhere.com")
   return driver
 
