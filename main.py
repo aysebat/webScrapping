@@ -40,9 +40,10 @@ def clean_text(text):
   return output
 
 def write_file(temperature):
-  name = f"{time.strftime('%Y_%m_%d-%I_%M_%S_%p')}.txt"
-  file = open(name, 'w')
-  file.write(str(temperature))
+  """The function write the temperature to the .txt file"""
+  filename = f"{time.strftime('%Y_%m_%d-%I_%M_%S_%p')}.txt"
+  with open(filename, 'w') as file:
+    file.write(temperature)
   file.close()
   
 
@@ -58,24 +59,18 @@ def main():
   driver.find_element(by="id", value="id_password").send_keys("automatedautomated" + Keys.RETURN)
   time.sleep(2)
   driver.find_element(by="xpath", value="/html/body/nav/div/a").click()
+  while True:
+    time.sleep(2)
+    text = driver.find_element(by="xpath", value="/html/body/div[1]/div/h1[2]").text
+    cleaned_text = str(clean_text(text))
+    write_file(cleaned_text)
+    
   
-  time.sleep(2)
-  text = driver.find_element(by="xpath",
-                                value="/html/body/div[1]/div/h1[2]").text
-
-  write_file(clean_text(text))
-  return clean_text(text)
-  
-
-
-
 #print(main())
 
 #run the program every 2 seconds
 print("Running the program..")
-while True:  
-  print(main())
-  time.sleep(2)
-  print("Run the program and save the .txt file")
+print(main())
+  
 
   
