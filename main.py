@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 import time
 
 ######################################
@@ -29,7 +30,7 @@ def get_driver():
   #driver = webdriver.Chrome(service=service, options=options)
   ######################################
 
-  driver.get("http://automated.pythonanywhere.com")
+  driver.get("http://automated.pythonanywhere.com/login/")
   return driver
 
 
@@ -44,10 +45,19 @@ def main():
   #load the page
   driver = get_driver()
   #for staying on the page for two second we need to sleep
+
+  driver.find_element(by="id", value="id_username").send_keys("automated")
+  time.sleep(1)
+  #Keys.RETURN -> is press login and enter the website
+  driver.find_element(by="id", value="id_password").send_keys("automatedautomated" + Keys.RETURN)
   time.sleep(2)
-  element = driver.find_element(by="xpath",
+  driver.find_element(by="xpath", value="/html/body/nav/div/a").click()
+  
+  time.sleep(2)
+  text = driver.find_element(by="xpath",
                                 value="/html/body/div[1]/div/h1[2]")
-  return clean_text(element.text)
+  return clean_text(text.text)
+  
 
 
 print(main())
