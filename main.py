@@ -39,6 +39,12 @@ def clean_text(text):
   output = float(text.split(": ")[1])
   return output
 
+def write_file(temperature):
+  name = f"{time.strftime('%Y_%m_%d-%I_%M_%S_%p')}.txt"
+  file = open(name, 'w')
+  file.write(str(temperature))
+  file.close()
+  
 
 def main():
   """Extract the text from http://automated.pythonanywhere.com"""
@@ -55,9 +61,21 @@ def main():
   
   time.sleep(2)
   text = driver.find_element(by="xpath",
-                                value="/html/body/div[1]/div/h1[2]")
-  return clean_text(text.text)
+                                value="/html/body/div[1]/div/h1[2]").text
+
+  write_file(clean_text(text))
+  return clean_text(text)
   
 
 
-print(main())
+
+#print(main())
+
+#run the program every 2 seconds
+print("Running the program..")
+while True:  
+  print(main())
+  time.sleep(2)
+  print("Run the program and save the .txt file")
+
+  
